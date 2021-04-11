@@ -128,7 +128,7 @@ print(train_X.shape,valid_X.shape,train_label.shape,valid_label.shape)
 
 
 INIT_LR = 1e-3
-epochs = 6
+epochs = 20
 batch_size = 64
 
 sport_model = Sequential()
@@ -138,7 +138,7 @@ sport_model.add(MaxPooling2D((2, 2),padding='same'))
 sport_model.add(Dropout(0.5))
 
 sport_model.add(Flatten())
-sport_model.add(Dense(32, activation='linear'))
+sport_model.add(Dense(256, activation='linear'))
 sport_model.add(LeakyReLU(alpha=0.1))
 sport_model.add(Dropout(0.5)) 
 sport_model.add(Dense(nClasses, activation='softmax'))
@@ -153,10 +153,11 @@ sport_model.compile(loss=keras.losses.categorical_crossentropy, optimizer=keras.
 
 
 
-sport_train_dropout = sport_model.fit(train_X, train_label, batch_size=batch_size,epochs=epochs,verbose=1,validation_data=(valid_X, valid_label))
+sport_train_dropout = sport_model.fit(train_X, train_label, steps_per_epoch=1000, batch_size=batch_size,epochs=epochs,verbose=1,validation_data=(valid_X, valid_label), validation_steps=200)
 
 # guardamos la red, para reutilizarla en el futuro, sin tener que volver a entrenar
-sport_model.save("sports_mnist.h5py")
+sport_model.save("modelo.h5")
+sport_model.save_weights("pesos.h5")
 
 
 

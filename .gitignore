@@ -1,2 +1,3 @@
-/sports_mnist.h5py
-/sportimages
+*.h5py/
+sportimages/
+*.h5
